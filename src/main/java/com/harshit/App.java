@@ -3,117 +3,120 @@ package com.harshit;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Hello world!
- *
- */
 public class App {
     public static void main(String[] args) {
 
-//        Truck truck1 = new Truck("TATA", "Bigger", 1234, "Suresh");
-//        Truck truck2 = new Truck("Volvo", "Bigger", 1236, "rajesh");
-//        Truck truck3 = new Truck("Ashok Leland", "Bigger", 1235, "mukesh");
-//
-//        truckServices.addTruck(truck1);
-//        truckServices.addTruck(truck2);
-//        truckServices.addTruck(truck3);
-
-//        Truck truck = truckServices.getTruck(1);
-//        System.out.println(truck);
-//
-//        truck.setDriver("Krishh");
-//        truckServices.updateTruck(truck);
-//        System.out.println("Updated truck: "+ truckServices.getTruck(4));
-//
-//        List<Truck> allTruck = truckServices.getAllTruck();
-//        for (Truck s : allTruck) {
-//            System.out.println(s);
-//        }
-
-//        for(int i=0; i<10; i++){
-//            truckServices.deleteTruck(i);
-//            System.out.println("Data deleted of id: "+i);
-//        }
         TruckServices truckServices = new TruckServices();
+        Scanner sc = new Scanner(System.in);
+
         while (true) {
 
-            System.out.println("Which operation do you want to perform??");
+            System.out.println("\nWhich operation do you want to perform?");
             System.out.println("1: Insertion");
             System.out.println("2: Update");
             System.out.println("3: Get Truck By ID");
             System.out.println("4: Get All Truck");
             System.out.println("5: Delete by ID");
-            System.out.println("Enter your requirement");
-            Scanner sc = new Scanner(System.in);
+            System.out.println("6: Exit");
+            System.out.print("Enter your choice: ");
+
             int a = sc.nextInt();
-            sc.nextLine();
+            sc.nextLine(); // consume newline
+
             switch (a) {
+
                 case 1:
-                    System.out.println("Here you can insert (❁´◡`❁)");
                     System.out.println("Enter Truck Company: ");
                     String com = sc.nextLine();
+
                     System.out.println("Enter Truck Model: ");
                     String model = sc.nextLine();
+
                     System.out.println("Enter Truck Number: ");
                     int num = sc.nextInt();
                     sc.nextLine();
+
                     System.out.println("Enter Truck Driver Name: ");
                     String driver = sc.nextLine();
 
                     Truck truck = new Truck(com, model, num, driver);
                     truckServices.addTruck(truck);
+                    System.out.println("Truck inserted successfully ✅");
                     break;
+
                 case 2:
-                    System.out.println("Enter Truck id: ");
+                    System.out.println("Enter Truck ID to update: ");
                     int id = sc.nextInt();
                     sc.nextLine();
+
                     System.out.println("Enter Truck Company: ");
                     com = sc.nextLine();
+
                     System.out.println("Enter Truck Model: ");
                     model = sc.nextLine();
+
                     System.out.println("Enter Truck Number: ");
                     num = sc.nextInt();
                     sc.nextLine();
+
                     System.out.println("Enter Truck Driver Name: ");
                     driver = sc.nextLine();
+
                     truck = new Truck();
-                    truck.setDriver(driver);
-                    truck.setTNumber(num);
-                    truck.setModel(model);
+                    truck.setId(id);
                     truck.setCompany(com);
+                    truck.setModel(model);
+                    truck.setTNumber(num);
+                    truck.setDriver(driver);
+
                     truckServices.updateTruck(truck);
-                    System.out.println("Updated truck: " + truckServices.getTruck(id));
+                    System.out.println("Truck updated successfully ✅");
                     break;
+
                 case 3:
-                    System.out.println("Enter Truck id: ");
+                    System.out.println("Enter Truck ID: ");
                     id = sc.nextInt();
-                    Truck truck3 = truckServices.getTruck(id);
-                    System.out.println("Truck id: "+truck3.getId());
-                    System.out.println("Truck company: "+truck3.getCompany());
-                    System.out.println("Truck model: "+truck3.getModel());
-                    System.out.println("Truck number: "+truck3.getTNumber());
-                    System.out.println("Truck driver: "+truck3.getDriver());
-                    break;
-                case 4:
-                    List<Truck> allTruck = truckServices.getAllTruck();
-                    for (Truck s : allTruck) {
-                        System.out.println("Truck id : "+s.getId());
-                        System.out.println("Truck company: "+s.getCompany());
-                        System.out.println("Truck model: "+s.getModel());
-                        System.out.println("Truck number: "+s.getTNumber());
-                        System.out.println("Truck driver: "+s.getDriver());
+
+                    Truck t = truckServices.getTruck(id);
+                    if (t != null) {
+                        System.out.println("ID: " + t.getId());
+                        System.out.println("Company: " + t.getCompany());
+                        System.out.println("Model: " + t.getModel());
+                        System.out.println("Number: " + t.getTNumber());
+                        System.out.println("Driver: " + t.getDriver());
+                    } else {
+                        System.out.println("Truck not found ❌");
                     }
                     break;
+
+                case 4:
+                    List<Truck> trucks = truckServices.getAllTruck();
+                    if (trucks.isEmpty()) {
+                        System.out.println("No trucks available ❌");
+                    }
+                    for (Truck s : trucks) {
+                        System.out.println("\nID: " + s.getId());
+                        System.out.println("Company: " + s.getCompany());
+                        System.out.println("Model: " + s.getModel());
+                        System.out.println("Number: " + s.getTNumber());
+                        System.out.println("Driver: " + s.getDriver());
+                    }
+                    break;
+
                 case 5:
-                    System.out.println("Enter Truck id: ");
+                    System.out.println("Enter Truck ID: ");
                     id = sc.nextInt();
                     truckServices.deleteTruck(id);
-                    System.out.println("Data deleted of id: " + id);
+                    System.out.println("Truck deleted successfully ✅");
                     break;
+
+                case 6:
+                    System.out.println("Exiting application... 👋");
+                    sc.close();
+                    System.exit(0);   // ✅ Exit loop completely
+
                 default:
-                    System.out.println("You entered wrong input!!!");
-                    System.out.println("Try again... :)");
-                    break;
+                    System.out.println("Invalid choice ❌ Try again");
             }
         }
     }
